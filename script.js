@@ -29,15 +29,14 @@ function getCountryByIP() {
         .then(response => response.json())
         .then(data => {
             const country = data.country;
-            document.getElementById('countryName').textContent = country;
+            // TODO inject country to form and call getCountryCode(country) function
         })
         .catch(error => {
             console.error('Błąd pobierania danych z serwera GeoJS:', error);
         });
 }
 
-function getCountryCode() {
-    const countryName = document.getElementById('countryName').textContent;
+function getCountryCode(countryName) {
     const apiUrl = `https://restcountries.com/v3.1/name/${countryName}?fullText=true`;
 
     fetch(apiUrl)
@@ -49,6 +48,7 @@ function getCountryCode() {
     })
     .then(data => {        
         const countryCode = data[0].idd.root + data[0].idd.suffixes.join("")
+        // TODO inject countryCode to form
     })
     .catch(error => {
         console.error('Wystąpił błąd:', error);
@@ -59,6 +59,6 @@ function getCountryCode() {
 (() => {
     // nasłuchiwania na zdarzenie kliknięcia myszką
     document.addEventListener('click', handleClick);
-    
+
     fetchAndFillCountries();
 })()
